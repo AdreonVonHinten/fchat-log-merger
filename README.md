@@ -1,100 +1,75 @@
-# F-Chat Log Merge Tool 🔄
+# F-Chat Log Merger
 
-A powerful tool for merging F-Chat logs from multiple devices with an intuitive graphical interface. Compare and merge your chat histories while maintaining data integrity and avoiding duplicates.
+A tool to merge F-Chat logs from multiple devices into a single database. Perfect for keeping your spicy conversations in sync! 🔥
 
-## Features ✨
+## Features
 
-- **Visual Log Comparison**
-  - Side-by-side diff view of chat logs
-  - Highlights differences between device logs
-  - Navigate through changes with keyboard shortcuts
-  - Synchronized scrolling for easy comparison
+- 🔄 Merge chat logs from two F-Chat databases
+- 👀 View differences between conversations across devices
+- 🎯 Selective merging (to Device A, Device B, or both)
+- 🔍 Visual diff viewer for comparing conversations
+- 🛡️ Automatic backups before merging
+- 🌐 Support for all F-Chat message types
+- 🎨 Modern, user-friendly interface
+- 🌍 Localization support
 
-- **Smart Merging**
-  - Detects and removes duplicate messages
-  - Preserves message timestamps and sender information
-  - Automatic backup creation before merging
-  - Support for multiple target devices
+## Installation
 
-- **User-Friendly Interface**
-  - Account and conversation selection
-  - Visual indicators for different log states
-  - Progress tracking during merge operations
-  - Dark theme for comfortable viewing
-
-## Installation 🚀
-
-1. Clone the repository:
+1. Clone this repository:
 ```bash
-git clone https://github.com/AdreonVonHinten/fchat-log-merger.git
-cd fchat-log-merger
+git clone https://github.com/your-username/f-chat-log-merge.git
+cd f-chat-log-merge
 ```
 
-2. Create and activate a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage 💫
+## Usage
 
-1. Launch the merge tool:
+1. Launch the application:
 ```bash
-python merge_tool.py --database /path/to/your/database
+python main_view.py
 ```
 
-2. Select an account from the dropdown menu
+2. Click the ⚙️ Settings button to configure your F-Chat data folders
+3. Select an account from the dropdown
+4. Choose conversations to merge:
+   - Red items indicate different content between devices
+   - Gray items are identical
+5. Select your merge target (Device A, Device B, or Both)
+6. Click "Merge Selected" to merge the conversations
 
-3. The tool will display available conversations with their status:
-   - 🔴 Red: Different content between devices
-   - ⚪ Gray: Same content on both devices
+## Development
 
-4. To compare logs:
-   - Right-click a conversation
-   - Select "View Conversation"
-   - Use Alt+Up/Down to navigate between differences
-   - Use the mouse wheel or scrollbar to scroll both views simultaneously
+### Project Structure
 
-5. To merge logs:
-   - Select the conversations you want to merge
-   - Choose your target device(s)
-   - Click "Merge Selected"
-   - Backups will be automatically created in the `backups` directory
+- `main_view.py` - Main UI and application entry point
+- `data_merge.py` - Core merge logic and database operations
+- `fchat_logs.py` - F-Chat database interaction
+- `settings_dialog.py` - Configuration dialog
+- `localization.py` - Text localization support
+- `test_db_integrity.py` - Database integrity testing tool
 
-## Directory Structure 📁
+### Testing
 
-```
-F-Chat-Log-Merge/
-├── merge_tool.py     # Main application
-├── chat_viewer.py    # Chat log viewer
-├── diff_viewer.py    # Diff view implementation
-├── fchat_logs.py     # F-Chat log handling
-├── examples/         # Example data for testing
-├── backups/         # Automatic backups
-├── temp/            # Temporary merge files
-└── merge/           # Merged output files
+Use the database integrity testing tool to verify read/write operations:
+
+```bash
+python test_db_integrity.py -s <source_path> -a <account> -c <conversation>
 ```
 
-## Keyboard Shortcuts ⌨️
+Or use the VS Code launch configuration "Test DB Integrity".
 
-- `Alt + Up`: Navigate to previous difference
-- `Alt + Down`: Navigate to next difference
-- `Mouse Wheel`: Scroll both diff views simultaneously
+## Contributing
 
-## Contributing 🤝
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-Contributions are welcome! Please feel free to submit pull requests or open issues for any bugs or feature requests.
+## License
 
-## License 📜
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments 🙏
-
-- Built with Python and tkinter/ttkbootstrap
-- Special thanks to the F-Chat community
+This project is licensed under the MIT License - see the LICENSE file for details.

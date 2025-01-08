@@ -1,5 +1,5 @@
 import os
-from fchat_logs import ChatLogs, Message
+from fchat_logs import ChatLogs
 from typing import Tuple, Optional
 import shutil
 import argparse

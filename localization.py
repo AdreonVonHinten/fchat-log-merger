@@ -1,5 +1,3 @@
-from typing import Dict
-
 class Localization:
     def __init__(self):
         self._current_locale = "en"

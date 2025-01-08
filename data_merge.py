@@ -2,8 +2,8 @@ import os
 import shutil
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Dict, Set, Tuple
-from fchat_logs import ChatLogs, Message, Character
+from typing import Tuple
+from fchat_logs import ChatLogs, Message
 
 @dataclass
 class MergeConfig:

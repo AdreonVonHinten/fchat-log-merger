@@ -1,1 +1,3 @@
-ttkbootstrap>=1.10.1  # For a modern and beautiful UI
+ttkbootstrap>=1.10.1
+pillow>=10.0.0
+pyinstaller>=6.0.0
