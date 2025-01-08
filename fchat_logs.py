@@ -171,7 +171,7 @@ class ChatLogs:
 
         # write date
         struct.pack_into('<H', buffer, offset, date)
-        
+        offset += 2
         # Pack 5-byte integer for file offset
         value_5_bytes = size.to_bytes(5, byteorder='little')
         buffer[offset:offset+5] = value_5_bytes
@@ -282,7 +282,7 @@ class ChatLogs:
             # return messages and continue as long as count is not satisfied
             return result, count == -1 or len(result) < count
         result = self._read_backlog(character, conversation_key, _msg_handler)
-        return result
+        return [] if result is None else result
 
     def _read_backlog(self, character: str, conversation_key: str, handler : Callable) -> any:
         """Read through a log file backwards, processing messages with the given handler
@@ -438,7 +438,7 @@ class ChatLogs:
             conversation: Dict with 'key' and 'name' of the conversation
             messages: Single message or list of messages to write
         """
-        file_path = self.get_log_file(account, conversation)
+        file_path = self.get_log_file(account, conversation[0])
         
         # Convert single message to list
         if not isinstance(messages, list):
@@ -452,11 +452,11 @@ class ChatLogs:
             buffer, _ = self.serialize_message(message)
             index = self.get_index(account)
             # Check and update index
-            has_index = conversation in index
+            has_index = conversation[0] in index
             index_buffer = self.check_index(
                 message, 
-                conversation, 
-                message.sender.name if message.sender else '',
+                conversation[0], 
+                conversation[1],
                 current_size
             )
             

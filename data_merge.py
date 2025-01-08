@@ -9,7 +9,7 @@ from fchat_logs import ChatLogs, Message, Character
 class MergeConfig:
     """Configuration for merge operation"""
     account: str
-    conversation: str
+    conversation: Tuple[str, str]
     device_a_path: str
     device_b_path: str
     target: str  # "both", "device_a", or "device_b"
@@ -25,42 +25,42 @@ class DataMerger:
 
         # Create backups first
         if config.target in ["both", "device_a"]:
-            self._backup_db(db_a, config.account, config.conversation, 'db_a')
+            self._backup_db(db_a, config.account, config.conversation[0], 'db_a')
         if config.target in ["both", "device_b"]:
-            self._backup_db(db_b, config.account, config.conversation, 'db_b')
+            self._backup_db(db_b, config.account, config.conversation[0], 'db_b')
 
         # TODO get on a date by date basis to save on memory
         # Get messages from both devices
-        messages_a = db_a.get_backlog(config.account, config.conversation)
-        messages_b = db_b.get_backlog(config.account, config.conversation)
+        messages_a = db_a.get_backlog(config.account, config.conversation[0])
+        messages_b = db_b.get_backlog(config.account, config.conversation[0])
         
         # Create message maps with timestamps as keys for easy lookup
-        map_a = {self._get_message_key(m): m for m in messages_a}
-        map_b = {self._get_message_key(m): m for m in messages_b}
+        map_a = {} if len(messages_a) == 0 else  {self._get_message_key(m): m for m in messages_a}
+        map_b = {} if len(messages_b) == 0 else  {self._get_message_key(m): m for m in messages_b}
         
         # Get all unique timestamps
         all_keys = sorted(set(map_a.keys()) | set(map_b.keys()))
         
         # Create merged database
         merged_db = ChatLogs(os.path.join("temp", "merge"))
-        merged_db.clear(config.account, config.conversation)
+        merged_db.clear(config.account, config.conversation[0])
         
         # Add all messages to merged database
         for key in all_keys:
             msg = map_a.get(key) or map_b.get(key)
             merged_db.log_message(config.account, config.conversation, msg)
             
-        merged_file = merged_db.get_log_file(config.account, config.conversation)
-        merged_file_ix = merged_db.get_log_file_ix(config.account, config.conversation)
+        merged_file = merged_db.get_log_file(config.account, config.conversation[0])
+        merged_file_ix = merged_db.get_log_file_ix(config.account, config.conversation[0])
         
         # Save merged database to target(s)
         if config.target in ["both", "device_a"]:
-            self._copy_and_replace(merged_file, db_a.get_log_file(config.account, config.conversation))
-            self._copy_and_replace(merged_file_ix, db_a.get_log_file_ix(config.account, config.conversation))
+            self._copy_and_replace(merged_file, db_a.get_log_file(config.account, config.conversation[0]))
+            self._copy_and_replace(merged_file_ix, db_a.get_log_file_ix(config.account, config.conversation[0]))
 
         if config.target in ["both", "device_b"]:
-            self._copy_and_replace(merged_file, db_b.get_log_file(config.account, config.conversation))
-            self._copy_and_replace(merged_file_ix, db_b.get_log_file_ix(config.account, config.conversation))
+            self._copy_and_replace(merged_file, db_b.get_log_file(config.account, config.conversation[0]))
+            self._copy_and_replace(merged_file_ix, db_b.get_log_file_ix(config.account, config.conversation[0]))
         
     
     def _copy_and_replace(self, source_path, destination_path):

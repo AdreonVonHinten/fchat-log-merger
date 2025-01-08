@@ -227,9 +227,11 @@ class ChatLogMerger(ttk.Window):
                 "end",
                 text=f"{convo[1]} ({convo[0]})",
                 values=(
-                    convo[0],
+                    f"{convo[1]} ({convo[0]})",
                     size_a,
-                    size_b
+                    size_b,
+                    convo[0],
+                    convo[1]
                 ),
                 tags=('different',) if different else ('common',)
             )
@@ -269,7 +271,7 @@ class ChatLogMerger(ttk.Window):
             return
             
         account = self.account_combo.get()
-        conversation = self.tree.item(selected[0])["values"][0]
+        conversation = self.tree.item(selected[0])["values"][3]
         
         diff_viewer = DiffViewer(
             self,
@@ -294,7 +296,7 @@ class ChatLogMerger(ttk.Window):
         target = target or self.target_var.get()
         
         for item in selected:
-            conversation = self.tree.item(item)["values"][0]
+            conversation = [  self.tree.item(item)["values"][3],  self.tree.item(item)["values"][4]]
             
             # Create merge config
             config = MergeConfig(
