@@ -1,7 +1,4 @@
-from cgitb import handler
-import imp
 import os
-import shutil
 import struct
 import argparse
 from dataclasses import dataclass
