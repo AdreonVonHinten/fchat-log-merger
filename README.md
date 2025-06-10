@@ -9,9 +9,6 @@ A tool to merge F-Chat logs from multiple devices into a single database. Perfec
 - 🎯 Selective merging (to Device A, Device B, or both)
 - 🔍 Visual diff viewer for comparing conversations
 - 🛡️ Automatic backups before merging
-- 🌐 Support for all F-Chat message types
-- 🎨 Modern, user-friendly interface
-- 🌍 Localization support
 
 ## Installation
 
@@ -60,15 +57,18 @@ Use the database integrity testing tool to verify read/write operations:
 python test_db_integrity.py -s <source_path> -a <account> -c <conversation>
 ```
 
-Or use the VS Code launch configuration "Test DB Integrity".
+## Future Features
+
+- Support F-Chat HTML Exports as Input
+- Allow merged logs to be exported as HTML and Markdown
+- More Search Functionalities
+- Mobile Support (F-Chat for Android)
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+1. Fork the repository and enhance on the Code
+2. Help me by testing and reporting issues
+3. Leave a comment 💕
 
 ## License
 
